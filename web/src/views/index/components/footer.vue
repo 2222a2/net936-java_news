@@ -22,8 +22,8 @@
     methods: {
       handleSource() {
         Modal.info({
-          title: '欢迎体验',
-          content: '使用过程中遇到问题，可以咨询作者：lengqin1024（微信）',
+          title: '关于本站',
+          content: '本站是基于 Java + Spring Boot + Vue 开发的前后端分离新闻管理系统，用于课程设计，仅供学习交流使用。',
           onOk() {},
         });
       },

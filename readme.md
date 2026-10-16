@@ -1,18 +1,15 @@
+# 新闻管理系统
 
 ## 项目简介
 
+本项目是一个基于 **Java + Spring Boot + Vue** 开发的前后端分离新闻管理系统，用于课程设计。
 
->该项目是基于Java+Springboot+Vue开发的新闻管理系统（前后端分离），这是一项为大学生课程设计作业而开发的项目。
-该系统旨在帮助大学生学习并掌握Java编程技能，同时锻炼他们的项目设计与开发能力。通过学习基于Java的新闻管理系统项目，
-大学生可以在实践中学习和提升自己的能力，为以后的职业发展打下坚实基础。如需完整源码，可以联系客服微信购买：lengqin1024
+系统分为「前台门户」和「后台管理」两部分：
 
-## 在线演示
+- **前台门户**：面向普通用户，提供新闻浏览、模糊搜索、查看详情、评论、收藏点赞、意见反馈、个人中心（资料修改、密码、我的收藏、我的评论）等功能。
+- **后台管理**：面向管理员，提供新闻管理、类型管理、评论管理、用户管理、消息管理、广告管理、意见反馈处理、操作日志、错误日志、统计分析、系统信息查看等功能。
 
-演示地址：[https://news.gitapp.cn](https://news.gitapp.cn)
-
-
-
-
+项目采用前后端分离架构：后端提供 REST 风格接口，前端通过 axios 调用接口完成页面渲染与交互，两端可独立开发、独立部署。
 
 ## 主要功能
 
@@ -24,7 +21,7 @@
 - 消息管理：新闻管理员可以在系统上发布消息，整个网站的用户都能收到。
 - 广告管理：新闻管理员可以在系统上发布广告消息，然后在详情页面右侧展示。
 - 意见反馈：新闻管理员可以在后台查看浏览用户提交的意见反馈信息。
-- 系统信息：管理员可以查看系统的基本信息，包括系统名称、服务器信息、内存信息、cpu信息、软件信息等。
+- 系统信息：管理员可以查看系统的基本信息，包括系统名称、服务器信息、内存信息、CPU 信息、软件信息等。
 - 注册登录：用户通过注册和登录后，才能使用网站。
 - 门户浏览：用户进入首页后，可以浏览新闻列表信息，包括最新、最热。
 - 热门推荐：基于协同过滤推荐算法的热门推荐。
@@ -33,103 +30,168 @@
 - 模糊搜索：顶部搜索功能，支持模糊搜索新闻信息。
 - 新闻评论：详情页下侧用户可以评论新闻。
 
+## 项目结构
+
+```
+java_news
+├── server/     后端代码（Spring Boot + MyBatis-Plus）
+│   ├── pom.xml             Maven 依赖配置
+│   ├── upload/             图片等上传文件的存放目录
+│   └── src/main/
+│       ├── java/com/gk/study/
+│       │   ├── controller/   接口层
+│       │   ├── service/      业务逻辑层
+│       │   ├── mapper/       数据访问层（MyBatis Mapper 接口）
+│       │   ├── entity/       实体类
+│       │   ├── config/       配置类
+│       │   ├── interceptor/  权限拦截器
+│       │   └── MyApp.java    程序入口（启动类）
+│       └── resources/
+│           ├── application.yml          项目配置（数据库、端口、上传路径等）
+│           └── mapper/*.xml             MyBatis 映射文件
+├── web/        前端代码（Vue 3 + Vite + Ant Design Vue）
+│   └── src/
+│       ├── view/index/     前台门户页面
+│       ├── view/admin/     后台管理页面
+│       ├── api/            接口请求封装
+│       ├── router/         路由配置
+│       └── store/          状态管理与全局常量
+└── doc/        开发文档与数据库脚本
+```
+
 ## 开发环境
 
-- 后端： Java 8 + Springboot
-- 前端： Javascript + Vue
-- 数据库：MySQL 5.7
-- 开发平台：IDEA + vscode
-- 运行环境：Windows 10/11
+| 项目 | 说明 |
+| --- | --- |
+| 后端 | Java 8 + Spring Boot 2.5.5 |
+| 前端 | JavaScript + Vue 3 + Vite |
+| 数据库 | MySQL 5.7 及以上 |
+| 开发工具 | IDEA + VS Code |
+| 运行环境 | Windows 10 / 11 |
 
 ## 关键技术
 
-- 前端技术栈 ES6、vue、vuex、vue-router、vue-cli、axios、antd
-- 后端技术栈 Java、Springboot、mybatis
+**前端技术栈**：ES6、Vue 3、Vue Router、Pinia、Axios、Ant Design Vue、Less、Vite
 
-
+**后端技术栈**：Java 8、Spring Boot、MyBatis-Plus、Druid 数据库连接池、MySQL
 
 ## 运行步骤
 
 ### 软件准备
 
-1. IDEA 2022 [下载地址](https://download.jetbrains.com/idea/ideaIU-2022.3.3.exe)
-2. MySQL 5.7 [下载地址](https://dev.mysql.com/get/Downloads/MySQLInstaller/mysql-installer-community-5.7.44.0.msi)
-3. Node [下载地址](https://nodejs.org/dist/v18.20.2/node-v18.20.2-x64.msi)
+1. JDK 8 [下载地址](https://www.oracle.com/java/technologies/javase/javase8-archive-downloads.html)
+2. IDEA [下载地址](https://www.jetbrains.com/idea/download/)
+3. MySQL 5.7 及以上 [下载地址](https://dev.mysql.com/get/Downloads/MySQLInstaller/mysql-installer-community-5.7.44.0.msi)
+4. Node.js 16 及以上（推荐 18 或更高）[下载地址](https://nodejs.org/dist/v18.20.2/node-v18.20.2-x64.msi)
 
+> 注意：后端必须使用 **JDK 8** 编译和运行，使用更高版本（如 JDK 17）可能因依赖兼容性启动失败。
 
 ### 后端运行步骤
 
-(1) 使用IDEA打开server目录，设置项目的jdk，同步maven依赖。
+**(1) 打开项目**
 
-(2) 创建数据库，创建SQL如下：
-```
-CREATE DATABASE IF NOT EXISTS java_db[your dbname] DEFAULT CHARSET utf8 COLLATE utf8_general_ci
-```
-(3) 恢复数据库数据。在mysql下依次执行如下命令：
+使用 IDEA 打开 `server` 目录，在 `File → Project Structure → Project SDK` 中把 JDK 设置为 1.8，然后等待 Maven 自动同步依赖。
 
-```
-mysql> use xxx(数据库名);
-mysql> source D:/xxx/xxx/xxx.sql;
+**(2) 创建数据库**
+
+在 MySQL 中执行：
+
+```sql
+CREATE DATABASE IF NOT EXISTS java_news DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_general_ci;
 ```
 
-(4) 配置数据库。在application.yml中配置您的数据库账号密码
+**(3) 导入表结构与初始数据**
 
+数据库脚本位于 `doc/java_news.sql`，在 MySQL 客户端中依次执行：
+
+```sql
+mysql> use java_news;
+mysql> source D:/你的路径/java_news/doc/java_news.sql;
 ```
-DB_NAME: [db_name]
+
+**(4) 配置数据库连接**
+
+打开 `server/src/main/resources/application.yml`，把数据库账号、密码改成你自己本机的：
+
+```yaml
+DB_NAME: java_news
 spring:
   datasource:
     username: root
-    password: [your password]
+    password: [你的数据库密码]
     url: jdbc:mysql://localhost:3306/${DB_NAME}?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 ```
 
-(5) 启动服务。点击IDEA的运行按钮。
+**(5) 启动服务**
 
+运行 `server/src/main/java/com/gk/study/MyApp.java` 的 `main` 方法。启动成功后，后端地址为 `http://127.0.0.1:9100`，接口统一前缀为 `/api`。
 
 ### 前端运行步骤
 
-(1) 安装依赖，cd到web目录，执行:
+**(1) 安装依赖**
+
+```bash
+cd web
+npm install
 ```
-npm install 
-```
-(2) 运行项目
-```
+
+**(2) 启动前端**
+
+```bash
 npm run dev
 ```
 
-然后访问前端地址。即可
+启动后浏览器访问 `http://localhost:8080` 即可打开前台门户，访问 `http://localhost:8080/admin` 进入后台管理。
 
+> 说明：前端通过 `web/src/store/constants.js` 中的 `BASE_URL` 指定后端地址（默认 `http://127.0.0.1:9100`）。如果后端端口有改动，需要同步修改这里。
+>
+> 前端开发服务器与后端端口不同，跨域由后端统一处理，无需额外配置代理。
+
+### 前台 / 后台默认账号
+
+| 角色 | 账号 | 密码 |
+| --- | --- | --- |
+| 管理员 | admin | 123456 |
+| 普通用户 | user1 / user2 / user3 | 123456 |
 
 ## 开发文档
 
-[点击进入](doc/doc.md)
-
-
-## 付费咨询
-
-微信（Lengqin1024）
+| 文档 | 说明 |
+| --- | --- |
+| [开发文档](doc/doc.md) | 功能介绍、所用框架说明与运行步骤 |
+| [项目启动与验证指南](doc/项目启动与验证指南.md) | 环境准备、启动步骤与功能验证清单 |
+| [项目缺口清单](doc/项目缺口清单.md) | 已补齐的接口与前端文件、仍待处理的事项 |
+| [数据库表结构](doc/表结构.docx) | 各数据表的字段说明 |
+| [数据库脚本](doc/java_news.sql) | 建库建表语句与初始数据 |
 
 ## 常见问题
 
 **1. 数据库版本有什么要求？**
 
-答：mysql 5.7及以上版本即可
+答：MySQL 5.7 及以上版本即可。
 
 **2. 项目的代码结构？**
 
-答：server目录是后端代码，web目录是前端代码。
+答：`server` 目录是后端代码（Spring Boot），`web` 目录是前端代码（Vue），`doc` 目录是开发文档与数据库脚本。
 
 **3. 需要学习哪些技术知识？**
 
-答：需要学习[Java编程知识](https://www.w3cschool.cn/java/)、[springboot框架知识](https://springdoc.cn/spring-boot/)、[vue编程知识](https://cn.vuejs.org/guide/introduction.html)
+答：需要学习 [Java 编程知识](https://www.w3cschool.cn/java/)、[Spring Boot 框架知识](https://springdoc.cn/spring-boot/)、[Vue 编程知识](https://cn.vuejs.org/guide/introduction.html)。
 
 **4. 后台管理的默认账号密码是？**
 
-答：管理员账号密码是：admin123 / admin123
+答：管理员账号密码是：admin / 123456。
 
-**5. 后台管理提示演示账号权限不足 怎么办？**
+**5. 后台管理提示账号权限不足怎么办？**
 
-答： 将演示账号变为管理员即可。修改role为3.
+答：需要把该用户的角色改为管理员，即在数据表 `b_user` 中把该用户的 `role` 字段改为 `3`。
 
+**6. 后端启动报数据库连接失败？**
+
+答：检查三步：MySQL 服务是否已启动；`application.yml` 中的账号密码是否正确；`java_news` 数据库是否已经导入 `doc/java_news.sql`。
+
+**7. 图片无法显示？**
+
+答：确认 `application.yml` 中的 `BASE_LOCATION` 配置为本项目在本机的实际路径（Windows 路径请使用反斜杠），该配置决定上传图片的读取目录。
