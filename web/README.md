@@ -1,6 +1,3 @@
-### 学习文档
-
-
 #### 运行步骤
 
 npm run dev
@@ -33,4 +30,4 @@ https://cdn.staticfile.org/ant-design-vue/3.2.20/antd.min.css
 #### public文件夹内容在build后会自动打到dist中
 
 
-学习过程中，遇到问题，可以咨询开发者。微信：Lengqin1024
+

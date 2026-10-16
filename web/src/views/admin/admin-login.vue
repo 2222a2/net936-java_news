@@ -55,8 +55,8 @@
   const checked = ref(false);
   const data = reactive({
     loginForm: {
-      username: 'admin123',
-      password: 'admin123',
+      username: 'admin',
+      password: '123456',
     },
     rules: {
       username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],

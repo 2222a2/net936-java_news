@@ -2,14 +2,14 @@
 server.port: 9100
 server.servlet.context-path: /api
 
-BASE_LOCATION: D:\aliyun_workspace\java_news
+BASE_LOCATION: C:\workbuddy\新闻管理系统\java_news
 DB_NAME: java_news
 
 
 spring:
   datasource:
     username: root
-    password: 4643830
+    password: 268794
     url: jdbc:mysql://localhost:3306/${DB_NAME}?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
