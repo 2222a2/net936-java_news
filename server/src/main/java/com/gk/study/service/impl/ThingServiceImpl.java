@@ -1,6 +1,7 @@
 package com.gk.study.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gk.study.entity.Thing;
@@ -29,7 +30,8 @@ public class ThingServiceImpl extends ServiceImpl<ThingMapper, Thing> implements
             if (sort.equals("recent")) {
                 queryWrapper.orderBy(true, false, "create_time");
             } else if (sort.equals("hot") || sort.equals("recommend")) {
-                queryWrapper.orderBy(true, false, "pv");
+                // pv 是 VARCHAR 字符串，直接排序会按字典序（"97" > "143"），必须转成数值再排
+                queryWrapper.orderBy(true, false, "CAST(pv AS UNSIGNED)");
             }
         }else {
             queryWrapper.orderBy(true, false, "create_time");
@@ -81,10 +83,20 @@ public class ThingServiceImpl extends ServiceImpl<ThingMapper, Thing> implements
     @Override
     public Thing getThingById(String id) {
         Thing thing = mapper.selectById(id);
-        thing.setPv(String.valueOf(Integer.parseInt(thing.getPv()) + 1));
-        mapper.updateById(thing);
+        if (thing == null) {
+            // 防止传入不存在的 id 时抛 NullPointerException
+            return null;
+        }
 
-        return thing;
+        // 浏览量自增：交给数据库做 "pv = pv + 1"，
+        // 避免"读出来 → 内存里 +1 → 整行写回"在并发访问时互相覆盖（丢失计数）。
+        // pv 字段是 VARCHAR，先 CAST 成数值再运算；NULL/空串用 COALESCE 兜底，否则 NULL + 1 还是 NULL。
+        mapper.update(null, new UpdateWrapper<Thing>()
+                .setSql("pv = COALESCE(CAST(pv AS UNSIGNED), 0) + 1")
+                .eq("id", id));
+
+        // 重新查一次，把数据库里的最新浏览量返回给前端
+        return mapper.selectById(id);
     }
 
     // 心愿数加1
@@ -120,7 +132,8 @@ public class ThingServiceImpl extends ServiceImpl<ThingMapper, Thing> implements
     @Override
     public List<Thing> getDefaultThingList() {
         QueryWrapper<Thing> queryWrapper = new QueryWrapper<>();
-        queryWrapper.orderByDesc("pv");
+        // 同上：pv 是字符串，按数值降序才是真正的"最热"
+        queryWrapper.orderByDesc("CAST(pv AS UNSIGNED)");
         return mapper.selectList(queryWrapper);
     }
 
