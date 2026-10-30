@@ -194,4 +194,4 @@ npm run dev
 
 **7. 图片无法显示？**
 
-答：确认 `application.yml` 中的 `BASE_LOCATION` 配置为本项目在本机的实际路径（Windows 路径请使用反斜杠），该配置决定上传图片的读取目录。
+答：`BASE_LOCATION` 已改为相对路径 `.`（基准 = 启动后端命令时所在的目录）。请确保在 `java_news` 仓库根目录下启动后端（如 `java -jar server/target/study-0.0.1-SNAPSHOT.jar`），即可正常读取 `server/upload` 里的图片；换电脑无需修改该配置。

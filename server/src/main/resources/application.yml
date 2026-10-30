@@ -2,7 +2,9 @@
 server.port: 9100
 server.servlet.context-path: /api
 
-BASE_LOCATION: C:\workbuddy\新闻管理系统\java_news
+# 图片根目录：相对路径，基准 = 启动 java 命令时所在的目录。
+# 请在 java_news 仓库根目录下启动后端（启动脚本已自动 cd），换电脑无需再改。
+BASE_LOCATION: .
 DB_NAME: java_news
 
 
@@ -63,7 +65,7 @@ spring:
     multipart:
       max-request-size: 10MB  # 上传文件总的最大值 默认10MB
       max-file-size: 1MB #单个文件最大值 默认1MB
-      location: ${BASE_LOCATION}\server\upload\tmp # 临时上传目录
+      # 临时上传目录不在此指定：相对路径在此处不可靠，交给 Tomcat 自动管理
       enabled: true
 
 
@@ -74,11 +76,11 @@ spring:
   web:
     resources:
 #      static-locations: classpath:/static
-      static-locations: file:${BASE_LOCATION}\server\upload
+      static-locations: file:${BASE_LOCATION}/server/upload
 
 
 File:
-  uploadPath: ${BASE_LOCATION}\server\upload
+  uploadPath: ${BASE_LOCATION}/server/upload
 
 mybatis:
   configuration:
